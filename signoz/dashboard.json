@@ -1,0 +1,20 @@
+{
+  "title": "SigNoz Sentinel - AI Agent Security & Health",
+  "description": "Real-time metrics for LLM agent operations, attacks, and latency",
+  "data": {
+    "title": "SigNoz Sentinel - AI Agent Security & Health",
+    "description": "Real-time metrics for LLM agent operations, attacks, and latency",
+    "layout": [
+      { "i": "panel-1", "x": 0, "y": 0, "w": 6, "h": 5 },
+      { "i": "panel-2", "x": 6, "y": 0, "w": 6, "h": 5 },
+      { "i": "panel-3", "x": 0, "y": 5, "w": 6, "h": 5 },
+      { "i": "panel-4", "x": 6, "y": 5, "w": 6, "h": 5 }
+    ],
+    "widgets": [
+      { "id": "panel-1", "title": "Total Conversation Turns", "panelTypes": "TIME_SERIES", "query": "SELECT count(*) FROM signoz_traces.distributed_signoz_index_v2 WHERE serviceName = 'LocalAgent1'" },
+      { "id": "panel-2", "title": "Prompt Injection Attacks Detected", "panelTypes": "TIME_SERIES", "query": "SELECT count(*) FROM signoz_traces.distributed_signoz_index_v2 WHERE tagMap['security.prompt_injection_detected'] = 'true'" },
+      { "id": "panel-3", "title": "Tool Execution Violations", "panelTypes": "TIME_SERIES", "query": "SELECT count(*) FROM signoz_traces.distributed_signoz_index_v2 WHERE tagMap['tool.violation'] = 'true'" },
+      { "id": "panel-4", "title": "P95 Generation Latency (ms)", "panelTypes": "TIME_SERIES", "query": "SELECT quantile(0.95)(durationNano)/1000000 FROM signoz_traces.distributed_signoz_index_v2 WHERE serviceName = 'LocalAgent1'" }
+    ]
+  }
+}
